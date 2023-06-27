@@ -1,0 +1,46 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: baselineweb
+  labels:
+    app: baselineweb
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: baselineweb
+  template:
+    metadata:
+      labels:
+        app: baselineweb
+    spec:
+      containers:
+      - name: baselineweb
+        resources:
+          limits:
+            cpu: 1050m
+            memory: 2050Mi
+          requests:
+            cpu: 500m
+            memory: 2000Mi
+        imagePullPolicy: Always
+        image: baseline.jfrog.io/docker/baseline:1.1.1
+        ports:
+          - containerPort: 3000
+      imagePullSecrets:
+      - name: basesec
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: baselineweb
+  namespace: default
+spec:
+  selector:
+    app: baselineweb
+  type: LoadBalancer
+  ports:
+  - name: http
+    targetPort: 3000
+    port: 80
