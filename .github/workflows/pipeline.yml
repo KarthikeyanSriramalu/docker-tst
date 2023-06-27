@@ -3,7 +3,7 @@ on:
   branches:
    - master
 
-# Jobs needs to part..
+# Jobs needs to part...
 jobs:
   setup-build-run-start:
     name: basewebpage
