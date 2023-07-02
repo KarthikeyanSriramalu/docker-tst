@@ -1,21 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nodeapp-deployment
-  labels:
-    app: nodeapp
+  name: github-actions-gke
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nodeapp
+      app: github-actions-gke
   template:
     metadata:
       labels:
-        app: nodeapp 
+        app: github-actions-gke
     spec:
       containers:
-      - name: nodeserver
-        image: thetips4you/nodeapp:latest
-        ports:
-        - containerPort: 3000
+        - name: app
+          image: gcr.io/github-actions-gke-385618/test:1.1.0
+          imagePullPolicy: Always
